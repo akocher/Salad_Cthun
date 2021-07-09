@@ -1,0 +1,7 @@
+## Interface: 11305
+## Title: Offspec_Mag
+## Author: Jumpstart
+## Version: 1.01
+## Notes: Shows who is clicking cubes in the fight for magtheridon
+
+Offspec_Mag.lua
