@@ -2,7 +2,7 @@
 
 https://www.curseforge.com/wow/addons/salad_cthun
 
-World of Warcraft Classic 1.13.05 addon to predict/show positioning on C'thun(AQ40).
+Addon to determine who needs to click the cubes.
 
 Open frame with /salad.
 
