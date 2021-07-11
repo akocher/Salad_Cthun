@@ -55,7 +55,7 @@ local classColors = {
 
 local Salad_PlayerName,_ = UnitName("player")
 local backdrop = {
-	bgFile = "Interface\\AddOns\\Salad_Cthun\\Images\\CThun_Positioning.tga",
+	bgFile = "Interface\\AddOns\\Offspec_Mag\\Images\\mags_room.tga",
 	edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
 	tile = false,
 	edgeSize = 32,
@@ -153,7 +153,7 @@ for i=1,40 do
 	local texdot = dot:CreateTexture("Texture_"..i, "OVERLAY")
 	dot.texture = texdot
 	texdot:SetAllPoints(dot)
-	texdot:SetTexture("Interface\\AddOns\\Salad_Cthun\\Images\\playerdot.tga")
+	texdot:SetTexture("Interface\\AddOns\\Offspec_Mag\\Images\\playerdot.tga")
 	texdot:Hide()
 	dot:SetScript("OnEnter", function()
 		tooltip:SetOwner(dot, "ANCHOR_RIGHT")
@@ -266,13 +266,13 @@ function wipeReserves()
 	end
 end
 
-SLASH_SALAD1 = "/salad";
+SLASH_SALAD1 = "/mag";
 
 local function HandleSlashCommands(str)
 	if (str == "help") then
 		print("|cffffff00Commands:");
-		print("|cffffff00   /salad |cff00d2d6help |r|cffffff00-- show this help menu");
-		print("|cffffff00   /salad -- open cthun map");
+		print("|cffffff00   /mag |cff00d2d6help |r|cffffff00-- show this help menu");
+		print("|cffffff00   /mag -- open cthun map");
 	elseif (str == "fill" or str == "" or str == nil) then
 		frame:Show();
 		fillGrid()

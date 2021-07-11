@@ -1,4 +1,4 @@
-## Interface: 11305
+## Interface: 20501
 ## Title: Offspec_Mag
 ## Author: Jumpstart
 ## Version: 1.01
