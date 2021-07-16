@@ -3,5 +3,4 @@
 ## Author: Jumpstart
 ## Version: 1.01
 ## Notes: Shows who is clicking cubes in the fight for magtheridon
-# hi
 Offspec_Mag.lua

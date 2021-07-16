@@ -1,45 +1,3 @@
-local dotPos = {
-	[1] = {1, 98}, --melee        		-- 
-	[2] = {-32, 131}, --healer    		-|
-	[3] = {-20, 170}, --ranged    		-|Group 1 
-	[4] = {22, 171}, --ranged     		-|
-	[5] = {34, 132}, --healer/ranged    --
-	[6] = {67, 71}, -- melee      		--
-	[7] = {69, 118}, --healer     		-|
-	[8] = {105, 137}, --ranged    		-|Group 2
-	[9] = {134, 107}, --ranged    		-|
-	[10] = {115, 70}, --healer/ranged   --
-	[11] = {-66, 69}, -- melee    		--
-	[12] = {-113, 69}, --healer   		-|
-	[13] = {-132, 106}, --ranged  		-|Group 3
-	[14] = {-66, 116}, --ranged   		-|
-	[15] = {-103, 135}, --healer/ranged --
-	[16] = {97, 4}, -- melee      		--
-	[17] = {130, 37}, --healer    		-|
-	[18] = {169, 24}, --ranged    		-|Group 4
-	[19] = {170, -17}, --ranged   		-|
-	[20] = {130, -30}, --healer/ranged  --
-	[21] = {-93, 2}, -- melee     		--
-	[22] = {-126, -31}, --healer  		-|
-	[23] = {-166, -19}, --ranged  		-|Group 5
-	[24] = {-166, 22}, --ranged   		-|
-	[25] = {-127, 35}, --healer/ranged  --
-	[26] = {69, -64}, -- melee    		--
-	[27] = {117, -64}, --healer   		-|
-	[28] = {135, -100}, --ranged  		-|Group 6
-	[29] = {107, -129}, --ranged  		-|
-	[30] = {70, -110}, --healer/ranged  --
-	[31] = {-65, -65}, -- melee   		--
-	[32] = {-65, -112}, --healer  		-|
-	[33] = {-101, -131}, --ranged 		-|Group 7
-	[34] = {-130, -102}, --ranged 		-|
-	[35] = {-112, -66}, --healer/ranged --
-	[36] = {3, -92}, -- melee     		--
-	[37] = {36, -126}, --healer   		-|
-	[38] = {24, -165}, --ranged   		-|Group 8
-	[39] = {-18, -165}, --ranged  		-|
-	[40] = {-30, -126} --healer/ranged  --
-}
 
 local classColors = {
 	["warrior"] = {0.68, 0.51, 0.33},
@@ -67,7 +25,7 @@ local backdrop = {
 	}
 }
 
-local frame = CreateFrame("Frame", "Cthun_room", UIParent)
+local frame = CreateFrame("Frame", "Mags_room", UIParent)
 frame:EnableMouse(true)
 frame:SetMovable(true)
 frame:SetHeight(534)
@@ -81,7 +39,7 @@ frame:RegisterEvent("GROUP_ROSTER_UPDATE")
 frame:SetScript("OnEvent", function()
 	fillGrid()
 end)
-frame:Hide()
+--frame:Hide()
 
 local Salad_Slider = CreateFrame("Slider", "MySlider1", frame, "OptionsSliderTemplate")
 Salad_Slider:SetPoint("BOTTOM", frame, "BOTTOMRIGHT", -80, 20)
@@ -121,10 +79,12 @@ drag:SetScript("OnHide", function()
 	frame:StopMovingOrSizing()
 end)
 
+--Display Title on frame
 local Salad_Fontstring = Salad_Header:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 Salad_Fontstring:SetPoint("CENTER", Salad_Header, "CENTER", 0, 12)
 Salad_Fontstring:SetText("Salad_Cthun")
 
+--create button to close out frame
 local button = CreateFrame("Button", "Close_button", frame)
 button:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -5, -5)
 button:SetHeight(32)
@@ -144,7 +104,7 @@ button:SetScript("OnClick",
 )
 
 --Create dot frames
-for i=1,40 do
+--[[ for i=1,25 do
 	dot = CreateFrame("Button", "Dot_"..i, frame)
 	dot:SetPoint("CENTER", frame, "CENTER", dotPos[i][1], dotPos[i][2])
 	dot:EnableMouse(true)
@@ -163,9 +123,9 @@ for i=1,40 do
 	dot:SetScript("OnLeave", function()
 		tooltip:Hide()
 	end)
-end
+end ]]
 
-function newDot(dot, tooltip, texture, name, class)
+--[[ function newDot(dot, tooltip, texture, name, class)
 	if (Salad_PlayerName == name) then
 		dot:SetWidth(36)
 		dot:SetHeight(36)
@@ -190,7 +150,7 @@ function newDot(dot, tooltip, texture, name, class)
 	dot:SetScript("OnLeave", function()
 		tooltip:Hide()
 	end)
-end
+end ]]
 
 local dotRes = {{{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"}}, -- group 1
 		  		{{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"}}, -- group 2
@@ -201,51 +161,21 @@ local dotRes = {{{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty",
 		  		{{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"}}, --    |
 		  		{{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"},{"Empty","Empty"}}} -- group 8
 
-function getRaidInfo()
-	for i=1,40 do
-		local name,_,subgroup,_,class = GetRaidRosterInfo(i);
+--[[ function getRaidInfo()
+	for i=1,25 do
+		local name,_,subgroup,_,class,_,_,_,_,_,role = GetRaidRosterInfo(i);
 
-		if (class == "Rogue" or class == "Warrior") then
-			if dotRes[subgroup][1][1] == "Empty" or dotRes[subgroup][1][1] == name then
-				dotRes[subgroup][1] = {name, class}
-			elseif dotRes[subgroup][5][1] == "Empty" or dotRes[subgroup][5][1] == name then
-				dotRes[subgroup][5] = {name, class}
-			elseif dotRes[subgroup][2][1] == "Empty" or dotRes[subgroup][2][1] == name then
-				dotRes[subgroup][2] = {name, class}
-			elseif dotRes[subgroup][3][1] == "Empty" or dotRes[subgroup][3][1] == name then
-				dotRes[subgroup][3] = {name, class}
-			else
-				dotRes[subgroup][4] = {name, class}
-			end
-		elseif (class == "Mage" or class == "Warlock" or class == "Hunter") then
-			if dotRes[subgroup][3][1] == "Empty" or dotRes[subgroup][3][1] == name then
-				dotRes[subgroup][3] = {name, class}
-			elseif dotRes[subgroup][4][1] == "Empty" or dotRes[subgroup][4][1] == name then
-				dotRes[subgroup][4] = {name, class}
-			elseif dotRes[subgroup][5][1] == "Empty" or dotRes[subgroup][5][1] == name then
-				dotRes[subgroup][5] = {name, class}
-			elseif dotRes[subgroup][2][1] == "Empty" or dotRes[subgroup][2][1] == name then
-				dotRes[subgroup][2] = {name, class}
-			else 
-				dotRes[subgroup][1] = {name, class}
-			end
-		elseif (class == "Priest" or class == "Paladin" or class == "Druid" or class == "Shaman") then
-			if dotRes[subgroup][2][1] == "Empty" or dotRes[subgroup][2][1] == name then
-				dotRes[subgroup][2] = {name, class}
-			elseif dotRes[subgroup][5][1] == "Empty" or dotRes[subgroup][5][1] == name then
-				dotRes[subgroup][5] = {name, class}
-			elseif dotRes[subgroup][3][1] == "Empty" or dotRes[subgroup][3][1] == name then
-				dotRes[subgroup][3] = {name, class}
-			elseif dotRes[subgroup][4][1] == "Empty" or dotRes[subgroup][4][1] == name then
-				dotRes[subgroup][4] = {name, class}
-			else
-				dotRes[subgroup][1] = {name, class}
-			end
+		--if (class == "Rogue" or class == "Warrior") then
+			
+		--elseif (class == "Mage" or class == "Warlock" or class == "Hunter") then
+			
+		--elseif (class == "Priest" or class == "Paladin" or class == "Druid" or class == "Shaman") then
+			
 		end
 	end
-end
+end ]]
 
-function fillGrid()
+--[[ function fillGrid()
 	wipeReserves()
 	getRaidInfo()
 	for i=1,8 do
@@ -254,19 +184,19 @@ function fillGrid()
 			newDot(_G["Dot_"..x], _G["Tooltip_"..x], _G["Texture_"..x], dotRes[i][j][1], strlower(dotRes[i][j][2]))
 		end
 	end
-end
+end ]]
 
-function wipeReserves()
-	for i=1,8 do
-		for j=1,5 do
-			for k=1,2 do
-				dotRes[i][j][k] = "Empty"
-			end
-		end
-	end
-end
+--function wipeReserves()
+--	for i=1,8 do
+--		for j=1,5 do
+--			for k=1,2 do
+--				dotRes[i][j][k] = "Empty"
+--			end
+--		end
+--	end
+--end
 
-SLASH_SALAD1 = "/mag";
+--[[ SLASH_MAG_1 = "/mag";
 
 local function HandleSlashCommands(str)
 	if (str == "help") then
@@ -281,4 +211,6 @@ local function HandleSlashCommands(str)
 	end
 end
 
-SlashCmdList.SALAD = HandleSlashCommands;
+SlashCmdList.MAG = HandleSlashCommands; ]]
+
+
